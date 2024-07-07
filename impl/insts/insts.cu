@@ -1,0 +1,86 @@
+#include "insts.cuh"
+
+#include "../../impl_template/tmpl_etc.cu"
+
+//	------- Instructions ---------
+
+#include "insts/entree.cuh"
+
+#include "insts/activation.cuh"
+#include "insts/activation_poid.cuh"
+
+#include "insts/poid.cuh"
+
+#include "insts/matmul.cuh"
+#include "insts/matmul_poid_AP.cuh"
+#include "insts/matmul_poid_PA.cuh"
+
+#include "insts/somme.cuh"
+#include "insts/sous.cuh"
+#include "insts/mul.cuh"
+#include "insts/div.cuh"
+
+#include "insts/isomme.cuh"
+
+#include "insts/div_scal.cuh"
+
+#include "insts/canalisation.cuh"
+#include "insts/union.cuh"
+
+//	------------------------------
+
+fonctions_insts_t fonctions_insts[INSTS] = {
+	fi_entree,
+	//
+	fi_activation,
+	fi_activation_poid,
+	//
+	fi_poid,
+	//
+	fi_matmul,
+	fi_matmul_poid_AP,
+	fi_matmul_poid_PA,
+	//
+	fi_somme,
+	fi_sous,
+	fi_mul,
+	fi_div,
+	//
+	fi_isomme,
+	fi_div_scal,
+	//
+	fi_canalisation,
+	fi_union
+};
+
+//	------------------------------
+
+uint inst_Xs    [INSTS] = {};
+uint inst_PARAMS[INSTS] = {};
+char *  inst_Nom[INSTS] = {};
+//
+dimention_f calculer_P[INSTS] = {};
+dimention_f calculer_L[INSTS] = {};
+//
+inst__f_f __f_inst[INSTS] = {};
+inst_df_f _df_inst[INSTS] = {};
+//
+inst_f  init_poids[INSTS] = {};
+
+//	-------------------------------
+
+void init_listes_instructions() {
+	FOR(0, i, INSTS) {
+		inst_Xs    [i] = fonctions_insts[i].Xs;
+		inst_PARAMS[i] = fonctions_insts[i].PARAMS;
+		inst_Nom   [i] = fonctions_insts[i].Nom;
+		//
+		calculer_P[i] = fonctions_insts[i].calculer_P;
+		calculer_L[i] = fonctions_insts[i].calculer_L;
+		//
+		__f_inst[i] = fonctions_insts[i].f ;
+		_df_inst[i] = fonctions_insts[i].df;
+		//
+		init_poids[i] = fonctions_insts[i].init_poids;
+	};
+};
