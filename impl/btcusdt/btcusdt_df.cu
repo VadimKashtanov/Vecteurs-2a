@@ -27,7 +27,11 @@ static __global__ void k__df_btcusdt(
 			//
 			float _p1p0 = p1p0[t_btcusdt*1 + mega_t];
 			//
-			dy[ty*Y + 0] = (_y - sng(_p1p0))  * powf(fabs(_p1p0)*100, 1.00)  / ((float)(GRAND_T * DECODEUR));;
+			//dy[ty*Y + 0] = (_y - sng(_p1p0))  * (powf(1+fabs(_p1p0)*100, 3.0)-1)  / ((float)(GRAND_T * DECODEUR));
+			//
+			float _ds = dS(_y, _p1p0);
+			float diviseur = ((float)(GRAND_T * DECODEUR));
+			dy[ty*Y + 0] = _ds / diviseur;
 			//
 			//
 			//usd = usd + usd * _y * _p1p0  * Levier;

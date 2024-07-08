@@ -1,8 +1,5 @@
 #include "opti.cuh"
 
-#define adam_beta1 0.9
-#define adam_beta2 0.99
-
 __global__ static void kerd_sgd(
 	uint t,
 	float * p, float * dp,
@@ -18,7 +15,7 @@ __global__ static void kerd_sgd(
 		float ch  = alpha * _grad;
 		float reg = alpha * L2_regularisation * p[thx];
 		//
-		p[thx] -= (ch + reg);
+		p[thx] -= (ch + reg);// * (   (uint)(_grad*1000000)  % 5 == 0 ? 1.0 : 0.0);
 	}
 };
 

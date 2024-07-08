@@ -30,7 +30,8 @@ static __global__ void k__f_btcusdt(
 			//
 			float _p1p0 = p1p0[t_btcusdt*1 + mega_t];
 			//
-			s += powf(_y - sng(_p1p0), 2)/2 * powf(fabs(_p1p0)*100, 1.0);
+			//s += powf(_y - sng(_p1p0), 2)/2 * (powf(1+fabs(_p1p0)*100, 3.0)-1);
+			s += S(_y, _p1p0);
 			//
 			//
 			//usd = usd + usd * _y * _p1p0  * Levier;

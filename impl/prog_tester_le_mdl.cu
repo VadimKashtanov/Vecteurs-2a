@@ -63,6 +63,8 @@ static float ** toutes_les_predictions(Mdl_t * mdl, BTCUSDT_t * btcusdt) {
 
 int main() {
 	srand(0);
+	init_listes_instructions();
+	ecrire_structure_generale("structure_generale.bin");
 	verif_insts();
 
 	//	=========================================================
