@@ -89,8 +89,8 @@ class SOFTMAX(Module_Mdl):
 		#	------------------
 
 		self.ix = [
-			_expx   := Dico(i=i_Activation,       X=[Y],   x=[None],        xt=[None], y=Y, p=[6], sortie=False   , do=self.do,dc=self.dc),
-			somme   := Dico(i=i_Somme,            X=[Y],   x=[_expx],       xt=[0],    y=C0, p=[C0],  sortie=False, do=self.do,dc=self.dc),
+			_expx   := Dico(i=i_Activation,       X=[Y],   x=[None],        xt=[None], y=Y, p=[4], sortie=False   , do=self.do,dc=self.dc),
+			somme   := Dico(i=i_ISomme,            X=[Y],   x=[_expx],       xt=[0],    y=C0, p=[C0],  sortie=False, do=self.do,dc=self.dc),
 			softmax := Dico(i=i_Div_Scal, X=[Y,C0], x=[_expx,somme], xt=[0,0],  y=Y, p=[C0],  sortie=True , do=self.do,dc=self.dc),
 		]
 
