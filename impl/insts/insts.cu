@@ -26,6 +26,7 @@
 
 #include "insts/canalisation.cuh"
 #include "insts/union.cuh"
+#include "insts/transpose2d.cuh"
 
 //	------------------------------
 
@@ -50,7 +51,8 @@ fonctions_insts_t fonctions_insts[INSTS] = {
 	fi_div_scal,
 	//
 	fi_canalisation,
-	fi_union
+	fi_union,
+	fi_transpose2d
 };
 
 //	------------------------------

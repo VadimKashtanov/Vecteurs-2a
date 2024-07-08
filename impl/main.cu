@@ -138,7 +138,7 @@ int main() {
 		//
 		uint I        = 100;
 		uint tous_les = 10;
-		
+
 		//
 		srand(time(NULL));
 		uint ts[GRAND_T];
@@ -152,7 +152,7 @@ int main() {
 			ts__d,
 			I,
 			tous_les,
-			MOMENT, 3e-3//3e-5
+			ADAM, 1e-4//3e-5
 		);
 		ecrire_mdl("mdl.bin", mdl);
 

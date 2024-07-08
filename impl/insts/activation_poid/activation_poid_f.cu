@@ -20,7 +20,7 @@ static void kerd__activation_poid(
 		uint tx0 = t_MODE(_t, mega_t-x0_t);
 		uint ty  = t_MODE(_t, mega_t     );
 		//
-		float s = x0[tx0*X0 + _y] + 0*p[_y];
+		float s = x0[tx0*X0 + _y] + p[_y];
 		//
 		float a = ACTIVATION(activ, s);
 		//

@@ -27,7 +27,7 @@ static void d_kerd__activation_poid(
 		float da = d_ACTIVATION(activ, s, a);
 
 		atomicAdd(&dx0[tx0*X0 + _y], dy[ty*Y + _y] * da);
-		atomicAdd(&dp [         _y], 0*dy[ty*Y + _y] * da);
+		atomicAdd(&dp [         _y], dy[ty*Y + _y] * da);
 	};
 };
 
