@@ -75,7 +75,7 @@ class DOT2D_PA(Module_Mdl):
 		assert X % C0 == 0
 		assert Y % C0 == 0
 
-		assert X == (Ax*Ay*C0)
+		assert X == (Bx*Ax*C0)
 		assert Y == (Ay*Bx*C0)
 
 		#	------------------

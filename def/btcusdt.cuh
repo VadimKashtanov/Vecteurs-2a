@@ -2,11 +2,19 @@
 
 #include "meta.cuh"
 
-#define Usdt   100
-#define Levier 10
-
 #define  score_p2(y,w,C) ( powf(y-w, C  )/(float)C )
 #define dscore_p2(y,w,C) ( powf(y-w, C-1)          )
+
+//	------------------------------------
+
+#define  D(y,c)  score_p2(y, sng(c), 2)
+#define dD(y,c) dscore_p2(y, sng(c), 2)
+
+#define K(y,c) ( 1.0/(1.0 + expf(-fabs(c)*30)) )//powf(fabs(c)*100, 1.00)
+#define R(y,c) (sng(y)==sng(c) ? 1.0 : 1.0)
+
+#define  S(y,c) ( D(y,c) * K(y,c) * R(y,c))
+#define dS(y,c) (dD(y,c) * K(y,c) * R(y,c))
 
 //	-------------------------------------
 

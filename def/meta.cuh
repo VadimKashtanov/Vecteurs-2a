@@ -2,10 +2,10 @@
 
 #include "etc.cuh"
 
-#define GRAND_T (1 * 16)
+#define GRAND_T (32 * 16)
 
-#define ENCODEUR (  8  )
-#define DECODEUR ( 1*24)
+#define ENCODEUR 0//(  4  )
+#define DECODEUR 1//( 1*24)
 
 #define MEGA_T (ENCODEUR + DECODEUR)
 

@@ -11,17 +11,15 @@ def normer_11(l):
 	_min, _max = min(l), max(l)
 	return [2*(e-_min)/(_max-_min)-1 for e in l]
 
+__sng = lambda x: (1 if x > 0 else -1)
+
 ####################################################################################
 
 d = "1H"# "15m"
 
 T = (4)*7*24 # * 4
 
-P = 1
-
-N = 8
-INTERVALLE_MAX = 256
-DEPART = INTERVALLE_MAX * N
+from CONTEXTE import N, P, INTERVALLE_MAX, DEPART
 
 HEURES = DEPART + T + P
 
@@ -42,9 +40,9 @@ ETAPE(1, "Ecriture CSV")
 with open("structure_generale.bin", 'rb') as co:
 	bins = co.read()
 	(I,) = st.unpack('I', bins[:4])
-	elements = st.unpack('I', bins[4:])
+	elements = st.unpack('I'*int(len(bins[4:])/4), bins[4:])
 	#
-	MEGA_T, = elements
+	ENCODEUR, DECODEUR, MEGA_T, = elements
 
 from calcule import calcule
 
@@ -72,13 +70,30 @@ print(f"moyenne des differences des deltas : {sum([abs(a-b) for a,b in zip(delta
 a =          (les_predictions)
 b = normer_11(prixs[-len(les_predictions)-1:-1])
 
+deltas_normés = [0] + [abs(b[i+1]-b[i]) for i in range(len(b)-1)]
+
 for i in range(int(len(les_predictions)/MEGA_T)):
+	#	Ligne |
 	plt.plot([len(les_predictions) - i*MEGA_T]*2, [-1, 1])
 
+
+	#	Les courbes
+	les_p1p0  = deltas_normés[i*MEGA_T:(i+1)*MEGA_T]
+	les_preds =             a[i*MEGA_T:(i+1)*MEGA_T]
+
+	s=0
+	courbe = [b[i*MEGA_T] + (s:=( s+__sng(elm)*les_p1p0[j] )) for j,elm in enumerate(a[i*MEGA_T:(i+1)*MEGA_T][ENCODEUR:])]
+
+	#	X
+	x = list(range(i*MEGA_T, (i+1)*MEGA_T))
+
 	if i == 0:
-		plt.plot(list(range(i*MEGA_T, (i+1)*MEGA_T)), a[i*MEGA_T:(i+1)*MEGA_T], 'm-o', label='o = Predictions')
+		plt.plot(x, les_preds, 'm-o', label='o = Predictions')
+		plt.plot(x[1+ENCODEUR:], courbe[:-1], 'g', label='Petite tendance')
 	else:
-		plt.plot(list(range(i*MEGA_T, (i+1)*MEGA_T)), a[i*MEGA_T:(i+1)*MEGA_T], 'm-o')
+		plt.plot(x, les_preds, 'm-o')
+		plt.plot(x[ENCODEUR:], courbe, 'g')
+
 	#
 	for j in range(MEGA_T):
 		if a[i*MEGA_T+j] >= 0.0:
@@ -97,8 +112,6 @@ print("len(prixs)          ", len(prixs))
 
 fig, ax = plt.subplots(2,2)
 
-__sng = lambda x: (1 if x > 0 else -1)
-
 signe = [+1,-1]
 
 LEVIERS = [10, 20, 30, 50]
@@ -106,31 +119,40 @@ LEVIERS = [10, 20, 30, 50]
 for sng in [0,1]:
 	for L in LEVIERS:
 		u = 100
-		_u0 = [u]
+		_u0 = []
 		for i in range(len(les_predictions)):
-			p0 = (len(prixs)-1-len(les_predictions)) + i    
-			p1 = (len(prixs)-1-len(les_predictions)) + i + 1
-			u += u * L * __sng(les_predictions[i]) * (prixs[p1]/prixs[p0]-1) * signe[sng]
-			_u0 += [u]
-			if u < 0: u = 0
+			if i%MEGA_T >= ENCODEUR:
+				p0 = (len(prixs)-1-len(les_predictions)) + i    
+				p1 = (len(prixs)-1-len(les_predictions)) + i + 1
+				u += u * L * __sng(les_predictions[i]) * (prixs[p1]/prixs[p0]-1) * signe[sng]
+				_u0 += [u]
+				if u < 0: u = 0
+			else:
+				_u0 += [0]
 		#
-		ax[0][sng].plot(_u0, label=f'{signe[sng]}x{L} * sng()')
-		ax[0][sng].legend()
+		ax[0][sng].plot(
+			[de*DECODEUR + i for de in range(int(len(les_predictions) / MEGA_T)) for i in range(DECODEUR)],
+			[_u0[de*MEGA_T+ENCODEUR + i] for de in range(int(len(les_predictions) / MEGA_T)) for i in range(DECODEUR)]
+		)
 #
 for sng in [0,1]:
 	for L in LEVIERS:
 		u = 100
-		_u0 = [u]
+		_u0 = []
 		for i in range(len(les_predictions)):
-			p0 = (len(prixs)-1-len(les_predictions)) + i    
-			p1 = (len(prixs)-1-len(les_predictions)) + i + 1
-			u += u * L * les_predictions[i] * (prixs[p1]/prixs[p0]-1) * signe[sng]
-			_u0 += [u]
-			if u < 0: u = 0
+			if i%MEGA_T >= ENCODEUR:
+				p0 = (len(prixs)-1-len(les_predictions)) + i    
+				p1 = (len(prixs)-1-len(les_predictions)) + i + 1
+				u += u * L * les_predictions[i] * (prixs[p1]/prixs[p0]-1) * signe[sng]
+				_u0 += [u]
+				if u < 0: u = 0
+			else:
+				_u0 += [0]
 		#
-		ax[1][sng].plot(_u0, label=f'{signe[sng]}x{L}')
-		ax[1][sng].legend()
+		ax[1][sng].plot(
+			[de*DECODEUR + i for de in range(int(len(les_predictions) / MEGA_T)) for i in range(DECODEUR)],
+			[_u0[de*MEGA_T+ENCODEUR + i] for de in range(int(len(les_predictions) / MEGA_T)) for i in range(DECODEUR)]
+		)
 	#
 #
-plt.legend()
 plt.show()

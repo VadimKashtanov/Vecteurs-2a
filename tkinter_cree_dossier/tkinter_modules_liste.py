@@ -7,7 +7,11 @@ from tkinter_cree_dossier.modules.dot1d_3 import *
 from tkinter_cree_dossier.modules.dot2d import *
 
 from tkinter_cree_dossier.modules.lstm import *
-from tkinter_cree_dossier.modules.lstm_peephole import LSTM1D_PEEPHOLE
+from tkinter_cree_dossier.modules.lstm_peephole import *
+
+from tkinter_cree_dossier.modules.signale_logistique import *
+
+from tkinter_cree_dossier.modules.attention import *
 
 class NONE(Module_Mdl):
 	nom = ""
@@ -34,14 +38,24 @@ modules = [
 	LSTM1D_PROFOND,
 	LSTM1D_PEEPHOLE,
 	NONE,
+	SIGNALE_LOGISTIQUE,
+	NONE,
+	NONE,
+	NONE,
+	NONE,
+#	----------------	#
+	NONE,
+	ATTENTION_2D,
 	NONE,
 	NONE,
 	NONE,
 	NONE,
 	NONE,
-#	-----------------	#
+	NONE,
+	NONE,
+#	----------------	#
 	SOMME3,
-	NONE,
+	SOFTMAX,
 	NONE,
 	NONE,
 	NONE,

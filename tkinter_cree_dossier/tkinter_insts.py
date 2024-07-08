@@ -151,8 +151,8 @@ class i_MatMul_Poid_PA(Inst):
 
 		Ax, Ay, Bx, C0 = self.params
 
-		assert self.Y    == C0 * Bx * Ay
-		assert self.X[0] == C0 * Bx * Ax
+		assert self.X[0] == (Bx*Ax*C0)
+		assert self.Y    == (Ay*Bx*C0)
 
 ############################################
 
@@ -281,6 +281,22 @@ class i_Union(Inst):
 		#	Params
 		assert len(self.params) == 0
 
+class i_Transpose2d(Inst):
+	nom = "Transpose 2D"
+	params = [0,0,0]
+	params_str = ['Ax', 'Ay', 'C0']
+	X = [0]
+	Y =  0
+
+	def assert_coherance(self):
+		assert len(self.X) == 1
+		assert self.Y == self.X[0]
+
+		#	Params
+		assert len(self.params) == 3
+		Ax, Ay, C0 = self.params
+		assert Ax*Ay*C0 == self.Y == self.X[0]
+
 ##########################################
 liste_insts = [
 	i__Entree,
@@ -304,5 +320,6 @@ liste_insts = [
 	i_Div_Scal,
 	#
 	i_Canalisation,
-	i_Union
+	i_Union,
+	i_Transpose2d
 ]

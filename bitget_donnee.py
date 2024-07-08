@@ -92,10 +92,8 @@ if __name__ == "__main__":
 	assert intervalles[CHOIX] % MEGA_T == 0
 	#
 	#
-	P = 1
-	N = 8
-	INTERVALLE_MAX = 256
-	DEPART = INTERVALLE_MAX * N
+	from CONTEXTE import N, P, INTERVALLE_MAX, DEPART
+
 	HEURES = intervalles[CHOIX] + DEPART + P
 	#
 	#

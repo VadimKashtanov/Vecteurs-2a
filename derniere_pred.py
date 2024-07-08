@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 with open("structure_generale.bin", 'rb') as co:
 	bins = co.read()
 	(I,) = st.unpack('I', bins[:4])
-	elements = st.unpack('I', bins[4:])
+	elements = st.unpack('I'*int(len(bins[4:])/4), bins[4:])
 	#
-	MEGA_T, = elements
+	ENCODEUR, DECODEUR, MEGA_T, = elements
 
 ####################################################################################
 
@@ -20,11 +20,7 @@ d = "1H" #"15m"
 
 T = 1 * MEGA_T
 
-P = 1
-
-N = 8
-INTERVALLE_MAX = 256
-DEPART = INTERVALLE_MAX * N
+from CONTEXTE import N, P, INTERVALLE_MAX, DEPART
 
 HEURES = DEPART + T + P
 

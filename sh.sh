@@ -77,6 +77,10 @@ nvcc -c impl/insts/canalisation/canalisation_df.cu ${A} &
 nvcc -c impl/insts/union/union.cu ${A} &
 nvcc -c impl/insts/union/union_f.cu ${A} &
 nvcc -c impl/insts/union/union_df.cu ${A} &
+#	/insts/transpose2d
+nvcc -c impl/insts/transpose2d/transpose2d.cu ${A} &
+nvcc -c impl/insts/transpose2d/transpose2d_f.cu ${A} &
+nvcc -c impl/insts/transpose2d/transpose2d_df.cu ${A} &
 #
 wait
 ###########
@@ -130,6 +134,8 @@ rm prog_tester_le_mdl.o
 #
 wait
 
+rm *.o
+
 ################################################################
 
 #	Verification d'erreure
@@ -150,5 +156,3 @@ then
 else
 	printf "[\033[92m***\033[0m] \033[102mAucune erreure durant l'execution.\033[0m\n"
 fi
-
-rm *.o
