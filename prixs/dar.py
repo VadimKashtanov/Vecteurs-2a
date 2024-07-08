@@ -6,9 +6,9 @@ from random import shuffle
 with open("structure_generale.bin", 'rb') as co:
 		bins = co.read()
 		(I,) = st.unpack('I', bins[:4])
-		elements = st.unpack('I', bins[4:])
+		elements = st.unpack('I'*int(len(bins[4:])/4), bins[4:])
 		#
-		MEGA_T, = elements
+		ENCODEUR, DECODEUR, MEGA_T, = elements
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -36,12 +36,7 @@ def norme_relative(l):
 
 #python3 prixs/dar.py PRIXS={HEURES} prixs/tester_model_donnee.bin BTC, ETH, ...
 
-N      = 4#8
-P      = 1
-
-INTERVALLE_MAX = 256
-
-DEPART = INTERVALLE_MAX * N
+from CONTEXTE import N, P, INTERVALLE_MAX, DEPART
 
 from sys import argv
 assert len(argv) > (1 + 2)
@@ -67,7 +62,7 @@ assert all(len(v)==PRIXS for m,ex in sources.items() for k,v in ex.items())
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-from outils import ema, direct, macd, chiffre
+from prixs.outils import ema, direct, macd, chiffre
 
 heures = 1, 2, 5, 12, 48, 168, 300
 
