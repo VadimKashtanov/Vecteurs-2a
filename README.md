@@ -1,4 +1,5 @@
 ```
+python3 bitget_donnee.py    #cree le fichier avec les prixs
 sh sh.sh
 python3 tkinter_cree.py
 python3 tester_le_model.py
