@@ -14,6 +14,8 @@ void canalisation__init_poids(Inst_t * inst);
 void canalisation__f(Inst_t * inst, float ** x__d, uint * ts__d, uint mega_t);
 void canalisation__df(Inst_t * inst, float ** x__d, float ** dx__d, uint * ts__d, uint mega_t);
 
+void canalisation__pre_f(Inst_t * inst);
+
 static fonctions_insts_t fi_canalisation = {
 	.Xs    =canalisation__Xs,
 	.PARAMS=canalisation__PARAMS,
@@ -25,5 +27,7 @@ static fonctions_insts_t fi_canalisation = {
 	.init_poids=canalisation__init_poids,
 	//
 	.f =canalisation__f,
-	.df=canalisation__df
+	.df=canalisation__df,
+	//
+	.pre_f=canalisation__pre_f
 };

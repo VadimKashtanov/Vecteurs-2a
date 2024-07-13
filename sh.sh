@@ -45,6 +45,10 @@ nvcc -c impl/insts/matmul_poid_AP/matmul_poid_AP_df.cu ${A} &
 nvcc -c impl/insts/matmul_poid_PA/matmul_poid_PA.cu ${A} &
 nvcc -c impl/insts/matmul_poid_PA/matmul_poid_PA_f.cu ${A} &
 nvcc -c impl/insts/matmul_poid_PA/matmul_poid_PA_df.cu ${A} &
+#	/insts/QKtDivClef
+nvcc -c impl/insts/QKtDivClef/QKtDivClef.cu ${A} &
+nvcc -c impl/insts/QKtDivClef/QKtDivClef_f.cu ${A} &
+nvcc -c impl/insts/QKtDivClef/QKtDivClef_df.cu ${A} &
 #	/insts/somme
 nvcc -c impl/insts/somme/somme.cu ${A} &
 nvcc -c impl/insts/somme/somme_f.cu ${A} &
@@ -65,10 +69,18 @@ nvcc -c impl/insts/div/div_df.cu ${A} &
 nvcc -c impl/insts/isomme/isomme.cu ${A} &
 nvcc -c impl/insts/isomme/isomme_f.cu ${A} &
 nvcc -c impl/insts/isomme/isomme_df.cu ${A} &
+#	/insts/imaxmin
+nvcc -c impl/insts/imaxmin/imaxmin.cu ${A} &
+nvcc -c impl/insts/imaxmin/imaxmin_f.cu ${A} &
+nvcc -c impl/insts/imaxmin/imaxmin_df.cu ${A} &
 #	/insts/div_scal
 nvcc -c impl/insts/div_scal/div_scal.cu ${A} &
 nvcc -c impl/insts/div_scal/div_scal_f.cu ${A} &
 nvcc -c impl/insts/div_scal/div_scal_df.cu ${A} &
+#	/insts/normalisation
+nvcc -c impl/insts/normalisation/normalisation.cu ${A} &
+nvcc -c impl/insts/normalisation/normalisation_f.cu ${A} &
+nvcc -c impl/insts/normalisation/normalisation_df.cu ${A} &
 #	/insts/canalisation
 nvcc -c impl/insts/canalisation/canalisation.cu ${A} &
 nvcc -c impl/insts/canalisation/canalisation_f.cu ${A} &

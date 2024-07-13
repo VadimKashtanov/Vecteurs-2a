@@ -11,6 +11,7 @@ static float ACTIVATION(uint activ, float s) {
 	else if (activ == 2) a = expf(-s*s);			//	gauss
 	else if (activ == 3) a = (s > 0 ? s : 0.0);		//	ReLu
 	else if (activ == 4) a = expf(s);				//	exp(x)
+	else if (activ == 5) a = s;						//	id(x)
 	else assert(0);
 	//
 	return a;
@@ -25,6 +26,7 @@ static float d_ACTIVATION(uint activ, float s, float a) {
 	else if (activ == 2) da = -2*s * a;
 	else if (activ == 3) da = (s>0);
 	else if (activ == 4) da = a;
+	else if (activ == 5) da = 1;
 	else assert(0);
 	//
 	return da;

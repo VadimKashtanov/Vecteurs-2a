@@ -14,6 +14,8 @@ void sous__init_poids(Inst_t * inst);
 void sous__f(Inst_t * inst, float ** x__d, uint * ts__d, uint mega_t);
 void sous__df(Inst_t * inst, float ** x__d, float ** dx__d, uint * ts__d, uint mega_t);
 
+void sous__pre_f(Inst_t * inst);
+
 static fonctions_insts_t fi_sous = {
 	.Xs    =sous__Xs,
 	.PARAMS=sous__PARAMS,
@@ -25,5 +27,7 @@ static fonctions_insts_t fi_sous = {
 	.init_poids=sous__init_poids,
 	//
 	.f =sous__f,
-	.df=sous__df
+	.df=sous__df,
+	//
+	.pre_f=sous__pre_f
 };

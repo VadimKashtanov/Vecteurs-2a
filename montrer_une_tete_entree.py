@@ -8,14 +8,19 @@ with open("prixs/dar.bin", "rb") as co:
 
 	(T,), bins = lire_uints(1, bins)
 
-	(LIGNES,N,P), bins = lire_uints(3, bins)
+	(LIGNES,D,N,P), bins = lire_uints(4, bins)
 
-	x, bins = lire_floats(LIGNES*N, bins)
-	y, bins = lire_floats(P,        bins)
+	x, bins = lire_floats(LIGNES*N*D, bins)
+	y, bins = lire_floats(P,          bins)
 
 	print("Entrés :")
 	for i in range(LIGNES):
-		print( "{l:3} | ".format(l=i) + ',    '.join(  map(lambda flt:'{f:+3.4f}'.format(f=flt), x[i*N:(i+1)*N])  ) )
+		print(f"l={i}  [")
+		for n in range(N):
+			_N = " {n:2}| ".format(n=n)
+			_D = ', '.join(  map(lambda flt:'{f:+3.4f}'.format(f=flt), x[i*N*D+n*D  :  i*N*D+(n+1)*D])  )
+			print(_N + _D)
+		print("]")
 
 	print("Sorties : ")
 	print(', '.join(  map(str, y)  ))

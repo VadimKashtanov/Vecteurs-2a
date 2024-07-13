@@ -14,6 +14,8 @@ void entree__init_poids(Inst_t * inst);
 void entree__f(Inst_t * inst, float ** x__d, uint * ts__d, uint mega_t);
 void entree__df(Inst_t * inst, float ** x__d, float ** dx__d, uint * ts__d, uint mega_t);
 
+void entree__pre_f(Inst_t * inst);
+
 static fonctions_insts_t fi_entree = {
 	.Xs    =entree__Xs,
 	.PARAMS=entree__PARAMS,
@@ -25,5 +27,7 @@ static fonctions_insts_t fi_entree = {
 	.init_poids=entree__init_poids,
 	//
 	.f =entree__f,
-	.df=entree__df
+	.df=entree__df,
+	//
+	.pre_f=entree__pre_f
 };

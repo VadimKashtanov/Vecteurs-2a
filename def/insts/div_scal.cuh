@@ -14,6 +14,8 @@ void div_scal__init_poids(Inst_t * inst);
 void div_scal__f(Inst_t * inst, float ** x__d, uint * ts__d, uint mega_t);
 void div_scal__df(Inst_t * inst, float ** x__d, float ** dx__d, uint * ts__d, uint mega_t);
 
+void div_scal__pre_f(Inst_t * inst);
+
 static fonctions_insts_t fi_div_scal = {
 	.Xs    =div_scal__Xs,
 	.PARAMS=div_scal__PARAMS,
@@ -25,5 +27,7 @@ static fonctions_insts_t fi_div_scal = {
 	.init_poids=div_scal__init_poids,
 	//
 	.f =div_scal__f,
-	.df=div_scal__df
+	.df=div_scal__df,
+	//
+	.pre_f=div_scal__pre_f
 };

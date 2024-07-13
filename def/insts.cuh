@@ -3,7 +3,7 @@
 #include "meta.cuh"
 #include "btcusdt.cuh"
 
-#define INSTS 16
+#define INSTS 19
 
 #define MAX_PARAMS 6
 #define MAX_XS     4
@@ -79,6 +79,8 @@ extern inst__f_f __f_inst[INSTS];
 extern inst_df_f _df_inst[INSTS];
 //
 extern inst_f init_poids[INSTS];
+//
+extern inst_f pre_f[INSTS];
 
 typedef struct {
 	uint Xs;
@@ -92,6 +94,8 @@ typedef struct {
 	//
 	inst__f_f  f;
 	inst_df_f df;
+	//
+	inst_f pre_f;
 } fonctions_insts_t;
 
 extern fonctions_insts_t fonctions_insts[INSTS];

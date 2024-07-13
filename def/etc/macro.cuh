@@ -17,6 +17,7 @@
 #include <pthread.h>
 #include <fcntl.h>
 #include <sys/file.h>
+#include <float.h>
 //
 #include <x86intrin.h>
 

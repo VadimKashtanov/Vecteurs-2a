@@ -14,6 +14,8 @@ void mul__init_poids(Inst_t * inst);
 void mul__f(Inst_t * inst, float ** x__d, uint * ts__d, uint mega_t);
 void mul__df(Inst_t * inst, float ** x__d, float ** dx__d, uint * ts__d, uint mega_t);
 
+void mul__pre_f(Inst_t * inst);
+
 static fonctions_insts_t fi_mul = {
 	.Xs    =mul__Xs,
 	.PARAMS=mul__PARAMS,
@@ -25,5 +27,7 @@ static fonctions_insts_t fi_mul = {
 	.init_poids=mul__init_poids,
 	//
 	.f =mul__f,
-	.df=mul__df
+	.df=mul__df,
+	//
+	.pre_f=mul__pre_f
 };
