@@ -31,3 +31,7 @@ void matmul_poid_AP__init_poids(Inst_t * inst) {
 
 	CONTROLE_CUDA(cudaMemcpy(inst->p__d, p, sizeof(float)*inst->P, cudaMemcpyHostToDevice));
 };
+
+void matmul_poid_AP__pre_f(Inst_t * inst) {
+	
+};

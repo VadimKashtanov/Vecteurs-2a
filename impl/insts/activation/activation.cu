@@ -11,3 +11,7 @@ uint activation__calculer_L(uint X[MAX_XS], uint x[MAX_XS], uint t[MAX_XS], uint
 void activation__init_poids(Inst_t * inst) {
 	//inst->p__d;
 };
+
+void activation__pre_f(Inst_t * inst) {
+	
+};

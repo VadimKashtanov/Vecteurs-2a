@@ -136,7 +136,7 @@ int main() {
 		printf(" === Echope %i ===\n", e);
 		
 		//
-		uint I        = 100;
+		uint I        = 50;
 		uint tous_les = 10;
 
 		//
@@ -152,7 +152,7 @@ int main() {
 			ts__d,
 			I,
 			tous_les,
-			ADAM, 1e-4//3e-5
+			ADAM, 1e-5//1e-4//3e-5
 		);
 		ecrire_mdl("mdl.bin", mdl);
 
@@ -160,6 +160,14 @@ int main() {
 			printf("pause ...\n");
 			sleep(2);
 		}
+
+		if (e % 1 == 0) {
+			FILE * fp = FOPEN("y_mdl.bin", "wb");
+			float * y = gpu_vers_cpu<float>(mdl->inst[10]->y__d, 54*54);
+			FWRITE(y, sizeof(float), 54*54, fp);
+			free(y);
+			fclose(fp);
+		};
 		
 		//
 		if (e % 50 == 0 && e != 0) {
@@ -175,9 +183,6 @@ int main() {
 	//liberer_mdl    (mdl    );
 	//liberer_btcusdt(btcusdt);
 };
-
-
-
 
 
 

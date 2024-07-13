@@ -21,10 +21,10 @@ __global__ static void kerd_adam(
 		v[thx] = _v;
 		s[thx] = _s;
 		//
-		float corr_v = _v / (1.0 - powf(adam_beta1,1+0*t));
-		float corr_s = _s / (1.0 - powf(adam_beta2,1+0*t));
+		float corr_v = _v / (1.0 - powf(adam_beta1,1+t));
+		float corr_s = _s / (1.0 - powf(adam_beta2,1+t));
 		//
-		float ch  = alpha * /*_grad **/ corr_v / (sqrtf(corr_s) + 1e-8);
+		float ch  = alpha * corr_v / (sqrtf(corr_s) + 1e-8);
 		float reg = alpha * L2_regularisation * p[thx];
 		//
 		p[thx] -= (ch + reg);

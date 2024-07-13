@@ -16,7 +16,7 @@ static __global__ void k__pourcent_btcusdt(
 		uint ty        = t_MODE(t, mega_t);
 		uint t_btcusdt = ts__d[t] + mega_t;
 		//
-		uint a_t_il_predit = (sng(p1p0[t_btcusdt]) == sng(y[ty*1 + 0]));
+		uint a_t_il_predit = (sng(p1p0[t_btcusdt]) == sng(y[ty*Y + 0]));
 		//
 		float _____somme = powf(fabs(p1p0[t_btcusdt]), coef_puissance) * a_t_il_predit;
 		float _potentiel = powf(fabs(p1p0[t_btcusdt]), coef_puissance) * true         ;

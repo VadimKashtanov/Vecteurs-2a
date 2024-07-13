@@ -14,3 +14,7 @@ void activation_poid__init_poids(Inst_t * inst) {
 
 	CONTROLE_CUDA(cudaMemcpy(inst->p__d, p, sizeof(float)*inst->P, cudaMemcpyHostToDevice));
 };
+
+void activation_poid__pre_f(Inst_t * inst) {
+	
+};

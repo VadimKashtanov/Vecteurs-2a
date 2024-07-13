@@ -23,6 +23,11 @@ static void lancer_une_inst(
 
 void mdl_f(Mdl_t * mdl, BTCUSDT_t * btcusdt, uint * ts__d) {
 	mdl_verif(mdl, btcusdt);
+
+	FOR(0, i, mdl->insts) {
+		pre_f[mdl->inst[i]->ID](mdl->inst[i]);
+	}
+	ATTENDRE_CUDA();
 	
 	FOR(0, encodeur, ENCODEUR) {
 		uint mega_t = 0 + encodeur;

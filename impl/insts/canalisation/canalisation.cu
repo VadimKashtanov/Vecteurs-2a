@@ -12,3 +12,7 @@ void canalisation__init_poids(Inst_t * inst) {
 	ASSERT(inst->Y == inst->x_Y[0] * inst->params[0]);
 	//inst->p__d;
 };
+
+void canalisation__pre_f(Inst_t * inst) {
+	
+};

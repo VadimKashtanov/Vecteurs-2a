@@ -17,16 +17,26 @@ static __global__ void kerd__transpose2d__simple(
 	uint _ax = thx % Ax;
 	uint _ay = (thx-_ax)/Ax;
 
+	//	A faire :
+	//	1) Regler la Transpose2d
+	//	2) Ajouter des Scaled ( 1/sqrt(Dk) ) pour reajuster le attention mechanisme
+	//	3) Ajouter des Masques au Attention (ou pas)
+	//	4) Eventuellement jouer avec le softmax du attention, ou le normer autrement.
+	//	5) Pas besoin de Norme car tous mes vecteurs seront toujours dans [-1;+1] peut importe où
+
+
 	//	thy = C0*GRAND_T
-	uint _c0 = thx % C0;
-	uint __t = (thx-_c0)/C0;
+	uint _c0 = thy % C0;
+	uint __t = (thy-_c0)/C0;
 
 	if (_ay < Ay && _ax < Ax && _c0 < C0 && __t < GRAND_T) {
 		uint tx0 = t_MODE(__t, mega_t-x0_t);
 		uint ty  = t_MODE(__t, mega_t     );
 		//
-		uint A  = ty*X0 + _c0*(Ax*Ay) + _ay*Ax + _ax;
-		uint At = ty*X0 + _c0*(Ax*Ay) + _ax*Ay + _ay;
+		uint A  = tx0*X0 + _c0*(Ax*Ay) + _ay*Ax + _ax;
+		uint At = ty*Y   + _c0*(Ax*Ay) + _ax*Ay + _ay;
+		//
+		//printf("%i %i %i %i\n", _ax, _ay, _c0, __t);
 		//
 		y[At] = x0[A];
 	}

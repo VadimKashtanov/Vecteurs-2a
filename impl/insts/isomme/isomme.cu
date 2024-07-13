@@ -15,3 +15,7 @@ void isomme__init_poids(Inst_t * inst) {
 	ASSERT(C0 > 0);
 	//inst->p__d;
 };
+
+void isomme__pre_f(Inst_t * inst) {
+	
+};

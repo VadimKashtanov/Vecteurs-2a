@@ -18,3 +18,7 @@ void transpose2d__init_poids(Inst_t * inst) {
 	ASSERT(inst->Y      == C0 * Ay*Ax);
 	ASSERT(inst->x_Y[0] == C0 * Ax*Ay);
 };
+
+void transpose2d__pre_f(Inst_t * inst) {
+	
+};

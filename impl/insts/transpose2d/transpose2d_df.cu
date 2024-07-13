@@ -18,15 +18,15 @@ static __global__ void d_kerd__transpose2d__simple(
 	uint _ay = (thx-_ax)/Ax;
 
 	//	thy = C0*GRAND_T
-	uint _c0 = thx % C0;
-	uint __t = (thx-_c0)/C0;
+	uint _c0 = thy % C0;
+	uint __t = (thy-_c0)/C0;
 
 	if (_ay < Ay && _ax < Ax && _c0 < C0 && __t < GRAND_T) {
 		uint tx0 = t_MODE(__t, mega_t-x0_t);
 		uint ty  = t_MODE(__t, mega_t     );
 		//
-		uint A  = ty*X0 + _c0*(Ax*Ay) + _ay*Ax + _ax;
-		uint At = ty*X0 + _c0*(Ax*Ay) + _ax*Ay + _ay;
+		uint A  = tx0*X0 + _c0*(Ax*Ay) + _ay*Ax + _ax;
+		uint At = ty*Y   + _c0*(Ax*Ay) + _ax*Ay + _ay;
 		//
 		//y[At] = x0[A];
 		atomicAdd(&x0[A], y[At]);

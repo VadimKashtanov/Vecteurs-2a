@@ -55,6 +55,7 @@ void mdl_plume_grad(Mdl_t * mdl, BTCUSDT_t * btcusdt, uint * ts__d) {
 			float *  p = gpu_vers_cpu<float>(inst-> p__d, inst->P);
 			float * dp = gpu_vers_cpu<float>(inst->dp__d, inst->P);
 			//
+			//
 			float pmax=p[0], pmin=p[0], pabsmax=fabs( p[0]), pmoyabs=fabs( p[0]);
 			FOR(1, j, inst->P) {
 				float val = p[j];
@@ -65,7 +66,8 @@ void mdl_plume_grad(Mdl_t * mdl, BTCUSDT_t * btcusdt, uint * ts__d) {
 			}
 			pmoyabs /= (float)inst->P;
 			//
-			float gmax=dp[0], gmin=dp[0], gabsmax=fabs( dp[0]), gmoyabs=fabs( p[0]);
+			//
+			float gmax=dp[0], gmin=dp[0], gabsmax=fabs( dp[0]), gmoyabs=fabs( dp[0]);
 			FOR(1, j, inst->P) {
 				float val = dp[j];
 				if (val > gmax) gmax = val;
@@ -75,8 +77,10 @@ void mdl_plume_grad(Mdl_t * mdl, BTCUSDT_t * btcusdt, uint * ts__d) {
 			}
 			gmoyabs /= (float)inst->P;
 			//
+			//
 			free( p);
 			free(dp);
+			//
 			//
 			printf("%3.i| [ID=%2.i] Y=%5.i : Grad max=%+f; min=%+f absmax=%+f moy=%+f ;; Poid max=%+f; min=%+f absmax=%+f moy=%+f ;; Poids=%7.i  (do=%.3g dc=%.3g)\n",
 				i, inst->ID, inst->Y,

@@ -22,10 +22,15 @@ static __global__ void d_kerd_div_scal(
 		//y[ty*Y + _y] = x0[tx0*X0 + _y] / x1[tx1*X1 + 0];
 		uint c0 = (  _y - (_y%(X0/C0))  )/(X0/C0);
 		//
-		float _dy = dy[ty*Y + c0];
+		float a = x0[tx0*X0 + _y];
+		float b = x1[tx1*X1 + c0];
 		//
-		atomicAdd(&dx0[tx0*X0 + _y], _dy / x1[tx1*X1 + c0]);
-		atomicAdd(&dx1[tx1*X1 + c0], _dy * (-1) * x0[tx0*X0 + _y]/powf(x1[tx1*X1 + c0], 2));
+		float _dy = dy[ty*Y + _y];
+		//
+		//printf("%f a=%f b=%f %f %f\n", _dy, a, b, _dy / b, _dy * (-1) * a/(b*b));
+		//
+		atomicAdd(&dx0[tx0*X0 + _y], _dy / b);				// ils s'annulent entre
+		atomicAdd(&dx1[tx1*X1 + c0], _dy * (-1) * a/(b*b)); // eux memes (indirectement)
 	};
 }
 
@@ -42,7 +47,6 @@ void div_scal__df(Inst_t * inst, float ** x__d, float ** dx__d, uint * ts__d, ui
 	//
 	ASSERT(x0_existe && x1_existe);
 	//
-	//inst_zero_mega_t(inst, mega_t);
 	//
 	if (x0_existe && x1_existe) {
 		d_kerd_div_scal<<<dim3(KERD(Y,16), KERD(GRAND_T,16)), dim3(16,16)>>>(

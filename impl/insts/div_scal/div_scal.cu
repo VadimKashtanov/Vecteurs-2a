@@ -15,3 +15,7 @@ void div_scal__init_poids(Inst_t * inst) {
 	ASSERT(inst->x_Y[1] == C0);
 	ASSERT(C0 > 0);
 };
+
+void div_scal__pre_f(Inst_t * inst) {
+	
+};

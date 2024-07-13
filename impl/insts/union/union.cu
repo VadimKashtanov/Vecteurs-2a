@@ -12,3 +12,7 @@ void union__init_poids(Inst_t * inst) {
 	ASSERT(inst->Y == inst->x_Y[0]+inst->x_Y[1]);
 	//inst->p__d;
 };
+
+void union__pre_f(Inst_t * inst) {
+	
+};

@@ -15,13 +15,17 @@
 #include "insts/matmul_poid_AP.cuh"
 #include "insts/matmul_poid_PA.cuh"
 
+#include "insts/QKtDivClef.cuh"
+
 #include "insts/somme.cuh"
 #include "insts/sous.cuh"
 #include "insts/mul.cuh"
 #include "insts/div.cuh"
 
 #include "insts/isomme.cuh"
+#include "insts/imaxmin.cuh"
 
+#include "insts/normalisation.cuh"
 #include "insts/div_scal.cuh"
 
 #include "insts/canalisation.cuh"
@@ -42,12 +46,17 @@ fonctions_insts_t fonctions_insts[INSTS] = {
 	fi_matmul_poid_AP,
 	fi_matmul_poid_PA,
 	//
+	fi_QKtDivClef,
+	//
 	fi_somme,
 	fi_sous,
 	fi_mul,
 	fi_div,
 	//
 	fi_isomme,
+	fi_imaxmin,
+	//
+	fi_normalisation,
 	fi_div_scal,
 	//
 	fi_canalisation,
@@ -68,6 +77,8 @@ inst__f_f __f_inst[INSTS] = {};
 inst_df_f _df_inst[INSTS] = {};
 //
 inst_f  init_poids[INSTS] = {};
+//
+inst_f  pre_f[INSTS] = {};
 
 //	-------------------------------
 
@@ -84,5 +95,7 @@ void init_listes_instructions() {
 		_df_inst[i] = fonctions_insts[i].df;
 		//
 		init_poids[i] = fonctions_insts[i].init_poids;
+		//
+		pre_f[i] = fonctions_insts[i].pre_f;
 	};
 };

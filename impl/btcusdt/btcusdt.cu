@@ -12,13 +12,14 @@ BTCUSDT_t * cree_btcusdt(char * fichier) {
 	FREAD(&ret->T, sizeof(uint), 1, fp);
 	
 	//
-	uint LIGNES, N, P;
+	uint LIGNES, D, N, P;
 	FREAD(&LIGNES, sizeof(uint), 1, fp);
+	FREAD(&D,      sizeof(uint), 1, fp);
 	FREAD(&N,      sizeof(uint), 1, fp);
 	FREAD(&P,      sizeof(uint), 1, fp);
 
 	//
-	ret->X = N * LIGNES;
+	ret->X = D * N * LIGNES;
 	ret->Y = P;
 
 	//

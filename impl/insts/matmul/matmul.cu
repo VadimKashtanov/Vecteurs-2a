@@ -21,3 +21,7 @@ void matmul__init_poids(Inst_t * inst) {
 	ASSERT(inst->x_Y[0] == C0 * Ax*Ay);
 	ASSERT(inst->x_Y[1] == C0 * Bx*Ax);
 };
+
+void matmul__pre_f(Inst_t * inst) {
+	
+};
