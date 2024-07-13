@@ -36,7 +36,7 @@ def norme_relative(l):
 
 #python3 prixs/dar.py PRIXS={HEURES} prixs/tester_model_donnee.bin BTC, ETH, ...
 
-from CONTEXTE import N, P, INTERVALLE_MAX, DEPART
+from CONTEXTE import D, N, P, INTERVALLE_MAX, DEPART
 
 from sys import argv
 assert len(argv) > (1 + 2)
@@ -60,7 +60,7 @@ sources     = {
 print(PRIXS, [len(v) for m,ex in sources.items() for k,v in ex.items()])
 assert all(len(v)==PRIXS for m,ex in sources.items() for k,v in ex.items())
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+###############################################################################################################
 
 from prixs.outils import ema, direct, macd, chiffre
 
@@ -120,7 +120,7 @@ OK("CHIFFRE")
 
 #eventuellement, chiffre haut / bas, norme [0;+1], [-1;0] (car on prefere des signaux a de la géométrie)
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+###############################################################################################################
 
 T = PRIXS - DEPART - P
 
@@ -135,17 +135,15 @@ LIGNES = len(lignes)
 
 print(f"LIGNES = {LIGNES}")
 print(f"T = {T}")
+print(f"D = {D}")
 print(f"N = {N}")
 print(f"P = {P}")
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+###############################################################################################################
 
-def _11_vers_01(l):
-	return [2*i-1 for i in l]
-	#assert all(0 <= i <= +1 for i in l)
-	#return l #car deja dans [0;+1]
-
-	#[(i+1)/2 for i in l] #[-1;+1] -> [0;+1]
+def D_ification(l): #[0;1] -> D*[0;1]
+	assert all(0 <= i <= +1 for i in l)
+	return [ (1- (x - d/(D-1) )**2) for x in l for d in range(D) ]
 
 prixs = sources[MARCHEES[0]]['prixs']
 
@@ -153,14 +151,14 @@ print("prixs : ", prixs[-5:])
 
 with open(fichier_bin, "wb") as co:
 	co.write(st.pack('I', T))
-	co.write(st.pack('I'*3, LIGNES, N, P))
+	co.write(st.pack('I'*4, LIGNES, D, N, P))
 
 	entrees = []
 	sorties = []
 
 	for t in range(DEPART, PRIXS - P):
 		for l in lignes:
-			entrees += _11_vers_01(l['type_de_norme']([ l['ligne'][t - n*int(l['interv'])] for n in range(N)]))
+			entrees += D_ification(l['type_de_norme']([ l['ligne'][t - n*int(l['interv'])] for n in range(N)]))
 		sorties += [(prixs[t+p+1]/prixs[t+p]-1) for p in range(P)]
 
 	print(f'Quelques entrées : {entrees[:4], entrees[-4:]}')
