@@ -1,6 +1,6 @@
 ```
 sh sh.sh
-clear; python3 tkinter_cree.py
+python3 tkinter_cree.py
 python3 tester_le_model.py
 python3 montrer_une_tete_entree.py
 python3 -m prixs.dar PRIXS=37089 prixs/dar.bin BTC
