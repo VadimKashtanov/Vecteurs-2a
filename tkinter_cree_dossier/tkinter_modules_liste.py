@@ -4,6 +4,8 @@ from tkinter_cree_dossier.modules.dot1d   import *
 from tkinter_cree_dossier.modules.dot1d_2 import *
 from tkinter_cree_dossier.modules.dot1d_3 import *
 
+from tkinter_cree_dossier.modules.dot1d_reccurent import *
+
 from tkinter_cree_dossier.modules.dot2d import *
 
 from tkinter_cree_dossier.modules.lstm import *
@@ -34,6 +36,16 @@ modules = [
 	NONE,
 	NONE,
 #	-----------------	#
+	DOT1D_RECCURENT,
+	DOT1D_RECCURENT__CHAINE,
+	NONE,
+	DOT1D_RECCURENT_N,
+	DOT1D_RECCURENT_N__CHAINE,
+	NONE,
+	NONE,
+	NONE,
+	NONE,
+#	-----------------	#
 	LSTM1D,
 	LSTM1D_PROFOND,
 	LSTM1D_PEEPHOLE,
@@ -46,7 +58,7 @@ modules = [
 #	----------------	#
 	NONE,
 	ATTENTION_2D,
-	NONE,
+	Encodeur,
 	NONE,
 	NONE,
 	NONE,
@@ -56,7 +68,7 @@ modules = [
 #	----------------	#
 	SOMME3,
 	SOFTMAX,
-	NONE,
+	NORMALISATION,
 	NONE,
 	NONE,
 	NONE,

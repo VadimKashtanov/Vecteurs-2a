@@ -156,6 +156,28 @@ class i_MatMul_Poid_PA(Inst):
 
 ############################################
 
+class i_QKtDivClef(Inst):
+	nom = "(Q @ K.t)/Clef**.5"
+	params = [0,0,0,0]
+	params_str = ['Ax', 'Ay', 'Bx', 'C0']
+	X = [0,0]
+	Y =  0
+
+	def assert_coherance(self):
+		assert len(self.X) == 2
+		assert self.Y > 0
+
+		#	Params
+		assert len(self.params) == 4
+
+		Ax, Ay, Bx, C0 = self.params
+
+		assert self.Y    == C0 * Bx * Ay
+		assert self.X[0] == C0 * Ax * Ay
+		assert self.X[1] == C0 * Bx * Ax
+
+############################################
+
 class i_Somme(Inst):
 	nom = "A+B"
 	params = []
@@ -231,7 +253,40 @@ class i_ISomme(Inst):
 		assert len(self.params) == 1
 		assert self.params[0] > 0
 
+class i_IMaxMin(Inst):
+	nom = "maxmin(vect)"
+	params = [1]
+	params_str = ['C0']
+	X = [0]
+	Y =  0
+
+	def assert_coherance(self):
+		assert len(self.X) == 1
+
+		assert self.Y == self.params[0] * 2
+		assert self.X[0] % self.params[0] == 0
+
+		#	Params
+		assert len(self.params) == 1
+		assert self.params[0] > 0
+
 ##########################################
+
+class i_Normalisation(Inst):
+	nom = "Normalisation"
+	params = [1]
+	params_str = ['C0']
+	X = [0,0]
+	Y =  0
+
+	def assert_coherance(self):
+		assert len(self.X) == 2
+		assert self.Y == self.X[0]
+		assert self.X[1] == 2*self.params[0]
+
+		#	Params
+		assert len(self.params) == 1
+		assert self.params[0] > 0
 
 class i_Div_Scal(Inst):
 	nom = "A<N> / b<1>"
@@ -310,13 +365,17 @@ liste_insts = [
 	i_MatMul_Poid_AP,
 	i_MatMul_Poid_PA,
 	#
+	i_QKtDivClef,
+	#
 	i_Somme,
 	i_Sous,
 	i_Mul,
 	i_Div,
 	#
 	i_ISomme,
+	i_IMaxMin,
 	#
+	i_Normalisation,
 	i_Div_Scal,
 	#
 	i_Canalisation,

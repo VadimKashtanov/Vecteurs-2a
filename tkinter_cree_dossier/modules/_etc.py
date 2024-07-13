@@ -15,6 +15,15 @@ conn = lambda sortie,inst,entree: (sortie, (inst,entree))
 
 #########################################################################################
 
+f_tanh     = 0
+f_logistic = 1
+f_gauss    = 2
+f_ReLu     = 3
+f_exp      = 4
+f_Id       = 5
+
+#########################################################################################
+
 class SOMME3(Module_Mdl):
 	nom = "A+B+C"
 	X, Y = [0,0,0], [0]
@@ -89,9 +98,47 @@ class SOFTMAX(Module_Mdl):
 		#	------------------
 
 		self.ix = [
-			_expx   := Dico(i=i_Activation,       X=[Y],   x=[None],        xt=[None], y=Y, p=[4], sortie=False   , do=self.do,dc=self.dc),
+			_expx   := Dico(i=i_Activation,       X=[Y],   x=[None],        xt=[None], y=Y, p=[f_exp], sortie=False   , do=self.do,dc=self.dc),
 			somme   := Dico(i=i_ISomme,            X=[Y],   x=[_expx],       xt=[0],    y=C0, p=[C0],  sortie=False, do=self.do,dc=self.dc),
 			softmax := Dico(i=i_Div_Scal, X=[Y,C0], x=[_expx,somme], xt=[0,0],  y=Y, p=[C0],  sortie=True , do=self.do,dc=self.dc),
 		]
 
+		return self.ix
+
+class NORMALISATION(Module_Mdl):
+	bg, fg = 'blue', 'black'
+	nom = "Normalisation"
+	X, Y = [0], [0]
+	X_noms, Y_noms = ["X"], ["Y"]
+	params = {
+		'C0' : 1
+	}
+	def cree_ix(self):
+		#	Params
+		X = self.X[0]
+		Y = self.Y[0]
+
+		C0 = self.params['C0']
+
+		assert X==Y
+
+		#	------------------
+
+		self.elements = {
+			'x' : MODULE_i_Y(X=[X], Y=[X], params={}, do=0,dc=0).cree_ix(),
+			
+			'minmax' : MODULE_i_IMaxMin(X=[X], Y=[2*C0], params={'C0':C0}, do=0,dc=0).cree_ix(),
+			'(e-min)/(max-min)' : MODULE_i_Normalisation(X=[X, 2*C0], Y=[Y], params={'C0':C0}, do=self.do,dc=0).cree_ix(),
+		}
+
+		self.connections = {
+			'x' : {0:None},
+			'minmax' : {0:('x',0)},
+			'(e-min)/(max-min)' : {
+				0:('x',0),
+				1:('minmax',0)
+			}
+		}
+
+		self.cree_elements_connections()
 		return self.ix
